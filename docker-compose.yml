@@ -1,0 +1,24 @@
+# Usage:
+# docker-compose build && docker-compose up
+version: '2'
+
+services:
+  docker-hugo:
+    image: talmai/docker-hugo
+    build:
+      context: .
+      dockerfile: Dockerfile-hugo
+    expose:
+      - 9000
+    volumes:
+      - database:/www
+    environment:
+      PHP_MEMORY_LIMIT:    512M
+      MAX_UPLOAD:          50M
+      PHP_MAX_FILE_UPLOAD: 200
+      PHP_MAX_POST:        100M
+      GROCY_CULTURE: en
+    container_name: hugo
+volumes:
+  database:
+
