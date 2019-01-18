@@ -12,6 +12,7 @@ services:
       - 1313
     volumes:
       - ./output:/output
+      - ./test_src:/src
     environment:
       HUGO_REFRESH_TIME:	3600
     container_name: hugo
