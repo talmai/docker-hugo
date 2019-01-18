@@ -32,18 +32,11 @@ Find your container:
 
 ## Building The Image Yourself (optional)
 
-    docker build -t jojomi/hugo:latest .
+```
+docker-compose build
+```
 
-The image is conveniently small at **about 20 MB** thanks to [alpine](http://gliderlabs.viewdocs.io/docker-alpine):
-
-    docker images | grep hugo
-    jojomi/hugo:0.18   latest              b2e7a8364baa        1 second ago      21.9 MB
-
-
-
-## Creating a new tag
-
-Create a new git branch, change the line `ENV HUGO_VERSION=0.18` in `Dockerfile` and wire it in the Docker Hub accordingly.
+The docker images build are based on [Alpine](https://hub.docker.com/_/alpine/), with an extremelly low footprint (less than 10 MB for nginx, and less than 70MB for hugo.
 
 
 ## docker-compose
@@ -90,8 +83,3 @@ proxy:
     - vhost.d:/etc/nginx/vhost.d:ro
   restart: always
 ```
-
-
-## Update Image on Hugo Update
-
-```./update.sh 0.25```
