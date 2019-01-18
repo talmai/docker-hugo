@@ -2,11 +2,10 @@
 FROM alpine:3.8@sha256:621c2f39f8133acb8e64023a94dbdf0d5ca81896102b9e57c0dc184cadaf5528
 
 LABEL description="Docker container for building static sites with the Hugo static site generator."
-LABEL maintainer="Johannes Mitlmeier <dev.jojomi@yahoo.com>"
+LABEL maintainer="Talmai Oliveira <to@talm.ai>"
 
 # config
 ENV HUGO_VERSION=0.53
-#ENV HUGO_TYPE=
 ENV HUGO_TYPE=_extended
 
 COPY ./run.sh /run.sh
