@@ -10,10 +10,13 @@ services:
       dockerfile: Dockerfile-hugo
     expose:
       - 1313
+    ports:
+      - '1313:1313'
     volumes:
       - ./output:/output
-      - ./test_src:/src
+      - ./test-src:/src
     environment:
-      HUGO_REFRESH_TIME:	3600
+      HUGO_REFRESH_TIME: 3600
+      HUGO_WATCH: "true"
     container_name: hugo
 
