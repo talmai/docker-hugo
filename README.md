@@ -11,25 +11,6 @@ Docker image for hugo (https://gohugo.io), a fast and flexible static site gener
 * `HUGO_REFRESH_TIME` (in seconds, only applies if not watching, if not set, the container will build once and exit)
 * `HUGO_BASEURL`
 
-
-## Executing
-
-    docker run --name "my-hugo" -P -v $(pwd):/src jojomi/hugo
-
-Or, more verbosely, and with a specified output mapping:
-
-    docker run --name "my-hugo" --publish-all \
-           --volume $(pwd):/src \
-           --volume /tmp/hugo-build-output:/output \
-           jojomi/hugo
-
-Find your container:
-
-    docker ps | grep "my-hugo"
-    CONTAINER ID        IMAGE                           COMMAND                CREATED             STATUS              PORTS                   NAMES
-    ba00b5c238fc        jojomi/hugo:latest   "/run.sh"              7 seconds ago       Up 6 seconds        1313/tcp      my-hugo
-
-
 ## Building The Image Yourself (optional)
 
 ```
@@ -38,8 +19,24 @@ docker-compose build
 
 The docker images build are based on [Alpine](https://hub.docker.com/_/alpine/), with an extremelly low footprint (less than 10 MB for nginx, and less than 70MB for hugo.
 
+## Executing
 
-## docker-compose
+    docker run --name "my-hugo" -P -v $(pwd):/src talmai/docker-hugo
+
+Or, more verbosely, and with a specified output mapping:
+
+    docker run --name "my-hugo" --publish-all \
+           --volume $(pwd):/src \
+           --volume /tmp/hugo-build-output:/output \
+           talmai/docker-hugo
+
+Find your container:
+
+    docker ps | grep "my-hugo"
+    CONTAINER ID        IMAGE                           COMMAND                CREATED             STATUS              PORTS                   NAMES
+    ba00b5c238fc        talmai/docker-hugo:latest   "/run.sh"              7 seconds ago       Up 6 seconds        1313/tcp      my-hugo
+
+### docker-compose
 
 Using this docker image together with nginx for serving static data.
 
@@ -47,32 +44,19 @@ Using this docker image together with nginx for serving static data.
 
 ```
 hugo:
-  image: jojomi/hugo:latest
+  image: talmai/docker-hugo:latest
   volumes:
     - ./src/:/src
     - ./output/:/output
+  expose:
+    - 1313
   environment:
     - HUGO_REFRESH_TIME=3600
     - HUGO_THEME=mytheme
     - HUGO_BASEURL=mydomain.com
-  restart: always
-
-web:
-  image: jojomi/nginx-static
-  volumes:
-    - ./output:/var/www
-  environment:
     - VIRTUAL_HOST=mydomain.com
-  ports:
-    - 80
   restart: always
-```
 
-`VIRTUAL_HOST` is set for use with jwilder's `nginx-proxy`:
-
-`docker-compose.yml`
-
-```
 proxy:
   image: jwilder/nginx-proxy
   ports:
