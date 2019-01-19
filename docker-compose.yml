@@ -17,6 +17,6 @@ services:
       - ./test-src:/src
     environment:
       HUGO_REFRESH_TIME: 3600
-      HUGO_WATCH: "true"
+      HUGO_BUILD_ONLY: "false"
     container_name: hugo
 

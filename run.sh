@@ -1,21 +1,21 @@
 #!/bin/sh
 
-WATCH="${HUGO_WATCH:=false}"
+BUILD_ONLY="${HUGO_BUILD_ONLY:=false}"
 SLEEP="${HUGO_REFRESH_TIME:=-1}"
 HUGO_DESTINATION="${HUGO_DESTINATION:=/output}"
-echo "HUGO_WATCH:" $WATCH
+echo "HUGO_BUILD_ONLY:" $BUILD_ONLY
 echo "HUGO_REFRESH_TIME:" $HUGO_REFRESH_TIME
 echo "HUGO_THEME:" $HUGO_THEME
 echo "HUGO_BASEURL" $HUGO_BASEURL
 echo "ARGS" $@
 
 HUGO=/usr/local/sbin/hugo
-echo "Hugo path: $HUGO"
+#echo "Hugo path: $HUGO"
 
 while [ true ]
 do
-    if [[ $HUGO_WATCH != 'false' ]]; then
-	    echo "Watching..."
+    if [[ $BUILD_ONLY == 'false' ]]; then
+	    echo "Serving..."
         $HUGO server --watch=true --source="/src" --theme="$HUGO_THEME" --destination="$HUGO_DESTINATION" --baseURL="$HUGO_BASEURL" --bind="0.0.0.0" "$@" || exit 1
     else
 	    echo "Building one time..."
