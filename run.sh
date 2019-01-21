@@ -16,7 +16,7 @@ while [ true ]
 do
     if [[ $BUILD_ONLY == 'false' ]]; then
 	    echo "Serving..."
-        $HUGO server --disableFastRender --watch=true --source="/src" --theme="$HUGO_THEME" --destination="$HUGO_DESTINATION" --baseURL="$HUGO_BASEURL" --bind="0.0.0.0" "$@" || exit 1
+        $HUGO server --disableFastRender --watch=true --source="/src" --theme="$HUGO_THEME" --destination="$HUGO_DESTINATION" --debug --baseURL="$HUGO_BASEURL" --bind="0.0.0.0" "$@" || exit 1
     else
 	    echo "Building one time..."
         $HUGO --source="/src" --theme="$HUGO_THEME" --destination="$HUGO_DESTINATION" --baseURL="$HUGO_BASEURL" "$@" || exit 1
